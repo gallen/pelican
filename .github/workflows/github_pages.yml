@@ -22,6 +22,11 @@ on:
         default: ""
         description: "The GitHub repo URL of a custom theme to use, for example: 'https://github.com/seanh/sidecar.git'"
         type: string
+      theme_path:
+        required: false
+        default: ""
+        description: "Some theme is in subfolder of the repo, this is to set the path, for example '/alchemy'. Theme path will be '.theme/alchemy'"
+        type: string
       python:
         required: false
         default: "3.12"
@@ -78,6 +83,7 @@ jobs:
 
           if "${{ inputs.theme }}":
               cmd += " --theme-path .theme"
+              cmd += "${{ inputs.theme_path }}"
 
           subprocess.run(cmd, shell=True, check=True)
       - name: Fix permissions
